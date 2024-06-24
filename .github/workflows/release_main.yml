@@ -83,7 +83,7 @@ jobs:
           go build -o ../v2raya_binaries/v2raya_${filename}_${env:VERSION} -ldflags="-X github.com/v2rayA/v2rayA/conf.Version=${env:VERSION} -s -w" -trimpath
           Set-Location -Path ..
         }
-        foreach ($arm in @('7')) {
+        foreach ($arm in @('6', '7')) {
           $env:GOARCH = 'arm'
           $env:GOARM = $arm
           $filename = $((Get-Content ./install/friendly-filenames.json | ConvertFrom-Json)."linux-arm$arm")."friendlyName"
@@ -281,6 +281,9 @@ jobs:
         goos: [linux]
         goarch: [amd64, arm64, 386, riscv64, mips64, mips64le, mipsle, mips, loong64]
         include:
+          - goos: linux
+            goarch: arm
+            goarm: 6
           - goos: linux
             goarch: arm
             goarm: 7
